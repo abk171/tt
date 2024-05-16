@@ -1,6 +1,9 @@
 package main
 
-import "regexp"
+import (
+	"regexp"
+	"fmt"
+)
 
 func generateWordTest(name string, n int, g int) func() []segment {
 	var b []byte
@@ -16,7 +19,7 @@ func generateWordTest(name string, n int, g int) func() []segment {
 		for i := 0; i < g; i++ {
 			segments[i] = segment{randomText(n, words), ""}
 		}
-
+		fmt.Println(segments)
 		return segments
 	}
 }

@@ -25,7 +25,7 @@ func init() {
 }
 
 type cell struct {
-	c	  rune
+	c     rune
 	style tcell.Style
 }
 
@@ -96,6 +96,19 @@ func randomText(n int, words []string) string {
 		}
 
 		last = w
+	}
+
+	return strings.Replace(r, "\n", " \n", -1)
+}
+
+func cleanWiki(words []string) string {
+	r := ""
+	n := len(words)
+	for i := 0; i < n; i++ {
+		r += words[i]
+		if i != n-1 {
+			r += " "
+		}
 	}
 
 	return strings.Replace(r, "\n", " \n", -1)

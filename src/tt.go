@@ -171,6 +171,8 @@ Modes
                         have the following form:
 
                         [{"text": "foo", attribution: "bar"}]
+	-wiki				Generate a typing test from a featured article on 
+						wikipedia. Defaults to 10 lines.
 
 Word Mode
     -n GROUPSZ          Sets the number of words which constitute a group.
@@ -249,6 +251,8 @@ func main() {
 	var wordFile string
 	var quoteFile string
 
+	var isWiki bool
+
 	var themeName string
 	var showWpm bool
 	var multiMode bool
@@ -269,6 +273,8 @@ func main() {
 
 	flag.StringVar(&wordFile, "words", "", "")
 	flag.StringVar(&quoteFile, "quotes", "", "")
+
+	flag.BoolVar(&isWiki, "wiki", false, "")
 
 	flag.BoolVar(&showWpm, "showwpm", false, "")
 	flag.BoolVar(&noSkip, "noskip", false, "")
@@ -336,8 +342,9 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-
 		testFn = generateTestFromData(b, rawMode, multiMode)
+	case isWiki:
+		testFn = generateWikiTest(g)
 	case len(flag.Args()) > 0:
 		path := flag.Args()[0]
 		testFn = generateTestFromFile(path, startParagraph)
@@ -383,7 +390,7 @@ func main() {
 	typer.ShowWpm = showWpm
 
 	if timeout != -1 {
-		timeout *= 1E9
+		timeout *= 1e9
 	}
 
 	var tests [][]segment
@@ -415,7 +422,7 @@ func main() {
 				idx--
 			}
 		case TyperComplete:
-			cpm := int(float64(ncorrect) / (float64(t) / 60E9))
+			cpm := int(float64(ncorrect) / (float64(t) / 60e9))
 			wpm := cpm / 5
 			accuracy := float64(ncorrect) / float64(nerrs+ncorrect) * 100
 
