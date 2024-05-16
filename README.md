@@ -83,3 +83,8 @@ Custom themes and word lists can be defined in `~/.tt/themes` and `~/.tt/words`
 and used in conjunction with the `-theme` and `-words` flags. A list of
 preloaded themes and word lists can be found in `words/` and `themes/` and are
 accessible by default using the respective flags.
+
+
+## Wikipedia tests
+`tt -wiki` generates a typing test from the first 10 sentences of a random featured article from wikipedia. Currently some characters (such as hyphens) don't always type correctly :)
+
